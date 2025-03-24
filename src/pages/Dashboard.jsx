@@ -65,7 +65,7 @@ const Dashboard = () => {
 
       {/* Sidebar */}
       <div 
-        className={`fixed h-full z-30 transition-all duration-300 ease-in-out bg-gradient-to-b from-blue-600 to-indigo-800 text-white shadow-xl ${
+        className={`fixed top-0 left-0 h-full z-30 transition-all duration-300 ease-in-out bg-gradient-to-b from-blue-600 to-indigo-800 text-white shadow-xl ${
           isMobile 
             ? sidebarOpen ? 'translate-x-0' : '-translate-x-full' 
             : 'translate-x-0'
@@ -152,7 +152,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Mobile Menu Toggle Button - Only visible when sidebar is closed on mobile */}
+      {/* Mobile Menu Toggle Button - Fixed at the bottom left and always visible on mobile when sidebar is closed */}
       {isMobile && !sidebarOpen && (
         <button 
           onClick={toggleSidebar}
