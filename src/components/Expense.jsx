@@ -3,8 +3,10 @@ import { db } from "../components/firebase";
 import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc, query, where } from "firebase/firestore";
 import { useAuth } from "../context/AuthContext";
 import { PlusCircle, Edit2, Trash2, Calendar, Tag, CreditCard, FileText, DollarSign, MinusCircle } from "lucide-react";
+import { useAmount } from "../context/AmountContext";
 
 const Expense = () => {
+  const{setTotalExpense,totalExpense}=useAmount()
   const { user: currentUser } = useAuth();
   const [formData, setFormData] = useState({
     source: "",
@@ -17,10 +19,11 @@ const Expense = () => {
   const [expenses, setExpenses] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
-
+  
   useEffect(() => {
     if (currentUser) {
       fetchExpenses();
+      
     }
   }, [currentUser]);
 
@@ -33,6 +36,7 @@ const Expense = () => {
       ...doc.data(),
     }));
     setExpenses(expensesData);
+    updateTotalExpense(expensesData)
   };
 
   const handleChange = (e) => {
@@ -87,7 +91,10 @@ const Expense = () => {
   };
 
   // Get total expenses amount
-  const totalExpenses = expenses.reduce((sum, expense) => sum + parseFloat(expense.amount || 0), 0);
+  const updateTotalExpense = (expensesData) => {
+    const totalExpense = expensesData.reduce((sum, expense) => sum + parseFloat(expense.amount || 0), 0);
+    setTotalExpense(totalExpense); // Set total expense in context
+  };
 
   // Get category colors
   const getCategoryColor = (category) => {
@@ -129,7 +136,7 @@ const Expense = () => {
           <div>
             <h3 className="text-lg font-medium text-red-100">Total Expenses</h3>
             <p className="text-3xl font-bold mt-1">
-              {new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(totalExpenses)}
+              {new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(totalExpense)}
             </p>
           </div>
           <div className="bg-white/20 backdrop-blur-sm p-4 rounded-xl">

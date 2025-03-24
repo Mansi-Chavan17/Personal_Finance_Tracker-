@@ -14,14 +14,19 @@ import {
   User,
   Search
 } from "lucide-react";
+import { useAmount } from "../context/AmountContext";
 
 const Dashboard = () => {
+  const{totalIncome}=useAmount()
+  const{totalExpense}=useAmount()
+  const{totalSaving}=useAmount()
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
+  const currentBalance=totalIncome-totalExpense+totalSaving
   return (
     <div className="flex h-screen bg-gray-50">
       {/* Sidebar */}
@@ -136,7 +141,7 @@ const Dashboard = () => {
               <div className="h-8 w-px bg-gray-200"></div>
               <div className="text-right">
                 <p className="text-sm font-medium text-gray-700">Current Balance</p>
-                <p className="text-lg font-bold text-blue-600">$24,562.80</p>
+                <p className="text-lg font-bold text-blue-600">{new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(currentBalance)}</p>
               </div>
             </div>
           </div>
@@ -148,48 +153,36 @@ const Dashboard = () => {
             <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl shadow-sm border border-green-200 p-6">
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <p className="text-sm font-medium text-green-700">Monthly Income</p>
-                  <h3 className="text-2xl font-bold text-gray-800">$8,350.00</h3>
+                  <p className="text-sm font-medium text-green-700">Total Income</p>
+                  <h3 className="text-2xl font-bold text-gray-800">{new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(totalIncome)}</h3>
                 </div>
                 <div className="bg-green-500/10 p-2 rounded-lg">
                   <ArrowUpCircle size={24} className="text-green-500" />
                 </div>
-              </div>
-              <div className="flex items-center">
-                <span className="text-xs font-medium text-green-600 bg-green-100 rounded-full px-2 py-0.5 mr-2">+12.5%</span>
-                <span className="text-xs text-gray-500">from last month</span>
               </div>
             </div>
             
             <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-xl shadow-sm border border-red-200 p-6">
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <p className="text-sm font-medium text-red-700">Monthly Expenses</p>
-                  <h3 className="text-2xl font-bold text-gray-800">$4,890.75</h3>
+                  <p className="text-sm font-medium text-red-700">Total Expenses</p>
+                  <h3 className="text-2xl font-bold text-gray-800">{new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(totalExpense)}</h3>
                 </div>
                 <div className="bg-red-500/10 p-2 rounded-lg">
                   <ArrowDownCircle size={24} className="text-red-500" />
                 </div>
-              </div>
-              <div className="flex items-center">
-                <span className="text-xs font-medium text-red-600 bg-red-100 rounded-full px-2 py-0.5 mr-2">-3.2%</span>
-                <span className="text-xs text-gray-500">from last month</span>
               </div>
             </div>
             
             <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl shadow-sm border border-blue-200 p-6">
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <p className="text-sm font-medium text-blue-700">Savings Rate</p>
-                  <h3 className="text-2xl font-bold text-gray-800">41.4%</h3>
+                  <p className="text-sm font-medium text-blue-700">Current Balance</p>
+                  <h3 className="text-2xl font-bold text-gray-800">{new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(currentBalance)}</h3>
                 </div>
                 <div className="bg-blue-500/10 p-2 rounded-lg">
                   <Target size={24} className="text-blue-500" />
                 </div>
-              </div>
-              <div className="flex items-center">
-                <span className="text-xs font-medium text-blue-600 bg-blue-100 rounded-full px-2 py-0.5 mr-2">+5.7%</span>
-                <span className="text-xs text-gray-500">from target goal</span>
               </div>
             </div>
           </div>

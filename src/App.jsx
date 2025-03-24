@@ -16,10 +16,12 @@ import Investment from './components/Investment';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import TransactionHistory from './components/TransactionHistory';
+import { AmountProvider } from './context/AmountContext';
 
 const App = () => {
   return (
     <AuthProvider>
+      <AmountProvider>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -35,6 +37,7 @@ const App = () => {
         <Route path="/transaction" element={<TransactionHistory />} />
       </Routes>
       <ToastContainer />
+      </AmountProvider>
     </AuthProvider>
   );
 };

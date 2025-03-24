@@ -3,8 +3,10 @@ import { db } from "../components/firebase";
 import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc, query, where } from "firebase/firestore";
 import { useAuth } from "../context/AuthContext";
 import { PlusCircle, Edit2, Trash2, DollarSign, Calendar, Tag, CreditCard, FileText } from "lucide-react";
+import { useAmount } from "../context/AmountContext";
 
 const Income = () => {
+  const {setTotalIncome}=useAmount()
   const { user: currentUser } = useAuth();
   const [formData, setFormData] = useState({
     source: "",
@@ -18,11 +20,13 @@ const Income = () => {
   const [editingId, setEditingId] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
 
+  
   useEffect(() => {
     if (currentUser) {
       fetchIncome();
+      setTotalIncome(totalIncome)
     }
-  }, [currentUser]);
+  }, [currentUser,incomeList,setIncomeList]);
 
   const fetchIncome = async () => {
     if (!currentUser) return;
@@ -102,6 +106,8 @@ const Income = () => {
     };
     return colors[category] || "bg-gray-100 text-gray-800";
   };
+
+  
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
