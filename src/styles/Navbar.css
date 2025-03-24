@@ -1,0 +1,84 @@
+/* Navbar container styling */
+.navbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+    padding: 1.2rem 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Link styling */
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: 500;
+    font-size: 1.1rem;
+    position: relative;
+    padding: 0.5rem 0;
+    letter-spacing: 0.5px;
+  }
+  
+  /* Fancy hover effect with underline */
+  .navbar a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    transition: width 0.3s ease;
+  }
+  
+  .navbar a:hover::after {
+    width: 100%;
+  }
+  
+  /* First link (Home) styling for brand identity */
+  .navbar a:first-child {
+    margin-right: auto;
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+  
+  /* Login button special styling */
+  .navbar a:last-child {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 1px solid white;
+    border-radius: 24px;
+    padding: 0.5rem 1.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  .navbar a:last-child:hover {
+    background-color: white;
+    color: #4b6cb7;
+  }
+  
+  .navbar a:last-child:hover::after {
+    width: 0;
+  }
+  
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .navbar {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 1rem;
+    }
+    
+    .navbar a {
+      margin: 0.5rem 0;
+    }
+    
+    .navbar a:first-child {
+      margin-bottom: 1rem;
+    }
+    
+    .navbar a:last-child {
+      align-self: flex-start;
+      margin-top: 1rem;
+    }
+  }
