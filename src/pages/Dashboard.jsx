@@ -20,7 +20,7 @@ const Dashboard = () => {
   const { totalIncome } = useAmount();
   const { totalExpense } = useAmount();
   const { totalSaving } = useAmount();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
 
   // Check screen size and update state
@@ -28,10 +28,12 @@ const Dashboard = () => {
     const checkScreenSize = () => {
       const mobile = window.innerWidth < 768;
       setIsMobile(mobile);
-      // Auto-close sidebar on small screens when component loads
-      if (mobile && !window.initialLoad) {
+      
+      // Auto-close sidebar on mobile, keep open on desktop
+      if (mobile) {
         setSidebarOpen(false);
-        window.initialLoad = true;
+      } else {
+        setSidebarOpen(true);
       }
     };
 
@@ -64,18 +66,18 @@ const Dashboard = () => {
       {/* Sidebar */}
       <div 
         className={`fixed h-full z-30 transition-all duration-300 ease-in-out bg-gradient-to-b from-blue-600 to-indigo-800 text-white shadow-xl ${
-          sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+          isMobile 
+            ? sidebarOpen ? 'translate-x-0' : '-translate-x-full' 
+            : 'translate-x-0'
         } ${isMobile ? 'w-64' : (sidebarOpen ? 'w-64' : 'w-20')}`}
       >
         <div className="p-4 flex justify-between items-center">
-          {(sidebarOpen || !isMobile) && (
-            <div className="flex items-center">
-              <div className="bg-white p-1 rounded-md mr-2">
-                <PieChart size={20} className="text-indigo-600" />
-              </div>
-              {(sidebarOpen || !isMobile) && <h1 className="text-xl font-bold tracking-tight">FinTracker</h1>}
+          <div className="flex items-center">
+            <div className="bg-white p-1 rounded-md mr-2">
+              <PieChart size={20} className="text-indigo-600" />
             </div>
-          )}
+            {(sidebarOpen || !isMobile) && <h1 className="text-xl font-bold tracking-tight">FinTracker</h1>}
+          </div>
           <button 
             onClick={toggleSidebar} 
             className="p-2 rounded-md bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-colors"
@@ -86,12 +88,10 @@ const Dashboard = () => {
 
         <div className="mt-8">
           <div className="px-4 mb-6">
-            {(sidebarOpen || !isMobile) && (
-              <div className="flex items-center py-3 px-3 bg-white/20 backdrop-blur-sm rounded-lg">
-                <Home size={20} className="mr-3 text-white" />
-                {(sidebarOpen || !isMobile) && <span className="font-medium">Dashboard</span>}
-              </div>
-            )}
+            <div className="flex items-center py-3 px-3 bg-white/20 backdrop-blur-sm rounded-lg">
+              <Home size={20} className="mr-3 text-white" />
+              {sidebarOpen && <span className="font-medium">Dashboard</span>}
+            </div>
           </div>
 
           <div className="space-y-1 px-2">
@@ -99,44 +99,44 @@ const Dashboard = () => {
               to="/income" 
               className="flex items-center px-3 py-3 rounded-lg hover:bg-white/10 transition-colors"
             >
-              <ArrowUpCircle size={20} className={`text-green-300 ${(sidebarOpen || !isMobile) ? 'mr-3' : 'mx-auto'}`} />
-              {(sidebarOpen || !isMobile) && <span className="font-medium">Income</span>}
+              <ArrowUpCircle size={20} className={`text-green-300 ${sidebarOpen ? 'mr-3' : 'mx-auto'}`} />
+              {sidebarOpen && <span className="font-medium">Income</span>}
             </Link>
             
             <Link 
               to="/expense" 
               className="flex items-center px-3 py-3 rounded-lg hover:bg-white/10 transition-colors"
             >
-              <ArrowDownCircle size={20} className={`text-red-300 ${(sidebarOpen || !isMobile) ? 'mr-3' : 'mx-auto'}`} />
-              {(sidebarOpen || !isMobile) && <span className="font-medium">Expense</span>}
+              <ArrowDownCircle size={20} className={`text-red-300 ${sidebarOpen ? 'mr-3' : 'mx-auto'}`} />
+              {sidebarOpen && <span className="font-medium">Expense</span>}
             </Link>
             
             <Link 
               to="/savings" 
               className="flex items-center px-3 py-3 rounded-lg hover:bg-white/10 transition-colors"
             >
-              <Target size={20} className={`text-blue-300 ${(sidebarOpen || !isMobile) ? 'mr-3' : 'mx-auto'}`} />
-              {(sidebarOpen || !isMobile) && <span className="font-medium">Saving Goals</span>}
+              <Target size={20} className={`text-blue-300 ${sidebarOpen ? 'mr-3' : 'mx-auto'}`} />
+              {sidebarOpen && <span className="font-medium">Saving Goals</span>}
             </Link>
             
             <Link 
               to="/investment" 
               className="flex items-center px-3 py-3 rounded-lg hover:bg-white/10 transition-colors"
             >
-              <TrendingUp size={20} className={`text-purple-300 ${(sidebarOpen || !isMobile) ? 'mr-3' : 'mx-auto'}`} />
-              {(sidebarOpen || !isMobile) && <span className="font-medium">Investments</span>}
+              <TrendingUp size={20} className={`text-purple-300 ${sidebarOpen ? 'mr-3' : 'mx-auto'}`} />
+              {sidebarOpen && <span className="font-medium">Investments</span>}
             </Link>
 
             <Link 
               to="/transaction" 
               className="flex items-center px-3 py-3 rounded-lg hover:bg-white/10 transition-colors"
             >
-              <CreditCard size={20} className={`text-yellow-300 ${(sidebarOpen || !isMobile) ? 'mr-3' : 'mx-auto'}`} />
-              {(sidebarOpen || !isMobile) && <span className="font-medium">Transactions</span>}
+              <CreditCard size={20} className={`text-yellow-300 ${sidebarOpen ? 'mr-3' : 'mx-auto'}`} />
+              {sidebarOpen && <span className="font-medium">Transactions</span>}
             </Link>
           </div>
           
-          {(sidebarOpen || !isMobile) && (
+          {sidebarOpen && (
             <div className="absolute bottom-0 left-0 right-0 p-4">
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 flex items-center">
                 <div className="bg-indigo-500 h-10 w-10 rounded-full flex items-center justify-center mr-3">
@@ -152,7 +152,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Mobile Menu Toggle Button - Fixed at the bottom for easy access */}
+      {/* Mobile Menu Toggle Button - Only visible when sidebar is closed on mobile */}
       {isMobile && !sidebarOpen && (
         <button 
           onClick={toggleSidebar}
