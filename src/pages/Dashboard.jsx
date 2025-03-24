@@ -65,7 +65,7 @@ const Dashboard = () => {
 
       {/* Sidebar */}
       <div 
-        className={`fixed top-0 left-0 h-full z-30 transition-all duration-300 ease-in-out bg-gradient-to-b from-blue-600 to-indigo-800 text-white shadow-xl ${
+        className={`fixed top-0 h-full z-30 transition-all duration-300 ease-in-out bg-gradient-to-b from-blue-600 to-indigo-800 text-white shadow-xl ${
           isMobile 
             ? sidebarOpen ? 'translate-x-0' : '-translate-x-full' 
             : 'translate-x-0'
@@ -137,7 +137,7 @@ const Dashboard = () => {
           </div>
           
           {sidebarOpen && (
-            <div className="absolute bottom-0 left-0 right-0 p-4">
+            <div className="absolute bottom-8 left-0 right-0 p-4">
               <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 flex items-center">
                 <div className="bg-indigo-500 h-10 w-10 rounded-full flex items-center justify-center mr-3">
                   <User size={20} className="text-white" />
@@ -152,22 +152,24 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Mobile Menu Toggle Button - Fixed at the bottom left and always visible on mobile when sidebar is closed */}
+      {/* Mobile Menu Toggle Button - Now it's fixed position in bottom right */}
       {isMobile && !sidebarOpen && (
         <button 
           onClick={toggleSidebar}
-          className="fixed bottom-4 left-4 z-40 p-3 rounded-full bg-indigo-600 text-white shadow-lg"
+          className="fixed bottom-4 right-4 z-40 p-3 rounded-full bg-indigo-600 text-white shadow-lg"
         >
           <Menu size={24} />
         </button>
       )}
 
       {/* Main Content */}
-      <div className={`flex-1 transition-all duration-300 ease-in-out overflow-auto ${
-        isMobile ? 'w-full' : (sidebarOpen ? 'md:ml-64' : 'md:ml-20')
-      }`}>
-        {/* Header */}
-        <header className="bg-white shadow-sm sticky top-0 z-10">
+      <div 
+        className={`flex-1 transition-all duration-300 ease-in-out ${
+          isMobile ? 'w-full' : (sidebarOpen ? 'md:ml-64' : 'md:ml-20')
+        }`}
+      >
+        {/* Header - Fixed position with proper z-index and spacing */}
+        <header className="bg-white shadow-sm sticky top-0 z-10 w-full">
           <div className="px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-3">
             <div className="relative w-full sm:w-64">
               <input 
@@ -191,7 +193,8 @@ const Dashboard = () => {
           </div>
         </header>
         
-        <main className="p-4 md:p-6 max-w-full">
+        {/* Main content with proper padding and scroll behavior */}
+        <main className="p-4 md:p-6 pb-20 overflow-y-auto">
           {/* Stats Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
             <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl shadow-sm border border-green-200 p-4">

@@ -18,25 +18,44 @@ import ProtectedRoute from './components/ProtectedRoute';
 import TransactionHistory from './components/TransactionHistory';
 import { AmountProvider } from './context/AmountContext';
 
+// Add these styles to your App.css file
+// This will ensure proper layout and prevent overlap issues
+
+
 const App = () => {
   return (
     <AuthProvider>
       <AmountProvider>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/login" element={<Login />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/dashboard' element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-        <Route path="/income" element={<Income />} />
-        <Route path="/expense" element={<Expense />} />
-        <Route path="/savings" element={<SavingGoals />} />
-        <Route path="/investment" element={<Investment />} />
-        <Route path="/transaction" element={<TransactionHistory />} />
-      </Routes>
-      <ToastContainer />
+        {/* Move ToastContainer to top level */}
+        <ToastContainer position="top-right" autoClose={3000} />
+        <div className="app-container relative min-h-screen">
+          <Navbar />
+          <div className="content-wrapper">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/login" element={<Login />} />
+              <Route path='/register' element={<Register />} />
+              {/* Dashboard now properly separated from navbar */}
+              <Route 
+                path='/dashboard' 
+                element={
+                  <ProtectedRoute>
+                    <div className="dashboard-page">
+                      <Dashboard />
+                    </div>
+                  </ProtectedRoute>
+                } 
+              />
+              <Route path="/income" element={<Income />} />
+              <Route path="/expense" element={<Expense />} />
+              <Route path="/savings" element={<SavingGoals />} />
+              <Route path="/investment" element={<Investment />} />
+              <Route path="/transaction" element={<TransactionHistory />} />
+            </Routes>
+          </div>
+        </div>
       </AmountProvider>
     </AuthProvider>
   );

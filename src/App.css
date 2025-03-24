@@ -1,1 +1,43 @@
-@import "tailwindcss"
+/* Add Tailwind CSS imports if needed (only if you're using Tailwind via PostCSS) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Dashboard specific fixes */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Fix navbar and sidebar spacing */
+@media (min-width: 768px) {
+  .main-content {
+    padding-top: 60px; /* Match navbar height */
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 767px) {
+  .sidebar-mobile {
+    position: fixed; /* Make sure the position works in a fixed container */
+    bottom: 0;
+    right: 0;
+    height: auto;
+    width: 80%;
+    max-width: 300px;
+  }
+  
+  .mobile-menu-button {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 40;
+  }
+}
